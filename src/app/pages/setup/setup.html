@@ -1,0 +1,226 @@
+<div class="setup-page">
+
+  <div class="background-glow glow-one"></div>
+  <div class="background-glow glow-two"></div>
+
+  <div class="setup-container">
+
+    <header class="setup-header">
+      <div class="ball">
+        ⚽
+      </div>
+
+      <div>
+        <span class="eyebrow">
+          FUTEBOL DRAFT
+        </span>
+
+        <h1>
+          Monte seu
+          <strong>Draft</strong>
+        </h1>
+
+        <p>
+          Configure os participantes e comece o leilão.
+        </p>
+      </div>
+    </header>
+
+    <main class="setup-card">
+
+      <section class="section-header">
+        <div>
+          <div class="step">
+            01
+          </div>
+
+          <div>
+            <h2>
+              Configuração da partida
+            </h2>
+
+            <p>
+              Escolha quantos participantes irão jogar.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="quantity-section">
+
+        <label>
+          Quantidade de participantes
+        </label>
+
+        <div class="quantity-control">
+
+          <button
+            type="button"
+            (click)="decreasePlayers()"
+            [disabled]="playerCount <= 2"
+          >
+            −
+          </button>
+
+          <div class="quantity-value">
+            <strong>
+              {{ playerCount }}
+            </strong>
+
+            <span>
+              participantes
+            </span>
+          </div>
+
+          <button
+            type="button"
+            (click)="increasePlayers()"
+            [disabled]="playerCount >= gameService.MAX_USERS"
+          >
+            +
+          </button>
+
+        </div>
+
+      </section>
+
+      <section class="players-section">
+
+        <div class="players-title">
+
+          <div>
+            <h3>
+              Participantes
+            </h3>
+
+            <p>
+              Informe o nome de cada participante.
+              <strong>
+                {{ playerCount }} jogadores
+              </strong>
+            </p>
+          </div>
+
+          <div class="coins-badge">
+            🪙 {{ gameService.STARTING_COINS }} moedas por jogador
+          </div>
+
+        </div>
+
+        <div class="players-grid">
+
+          @for (
+            name of names;
+            track $index
+          ) {
+
+            <div class="player-input">
+
+              <div class="player-number">
+                {{ $index + 1 }}
+              </div>
+
+              <div class="input-wrapper">
+
+                <label>
+                  Jogador {{ $index + 1 }}
+                </label>
+
+                <input
+                  type="text"
+                  [(ngModel)]="names[$index]"
+                  [placeholder]="'Nome do participante ' + ($index + 1)"
+                  maxlength="30"
+                />
+
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      </section>
+
+      <section class="game-info">
+
+        <div class="info-item">
+
+          <div class="info-icon">
+            👥
+          </div>
+
+          <div>
+            <strong>
+              {{ playerCount }}
+            </strong>
+
+            <span>
+              participantes
+            </span>
+          </div>
+
+        </div>
+
+        <div class="info-item">
+
+          <div class="info-icon">
+            ⚽
+          </div>
+
+          <div>
+            <strong>
+              18
+            </strong>
+
+            <span>
+              jogadores por time
+            </span>
+          </div>
+
+        </div>
+
+        <div class="info-item">
+
+          <div class="info-icon">
+            🪙
+          </div>
+
+          <div>
+            <strong>
+              {{ gameService.STARTING_COINS }}
+            </strong>
+
+            <span>
+              moedas iniciais
+            </span>
+          </div>
+
+        </div>
+
+      </section>
+
+      <button
+        type="button"
+        class="start-button"
+        (click)="startGame()"
+      >
+        <span>
+          Começar partida
+        </span>
+
+        <strong>
+          →
+        </strong>
+      </button>
+
+    </main>
+
+    <footer>
+      FUTEBOL DRAFT • LEILÃO DE JOGADORES
+    </footer>
+
+  </div>
+
+</div>

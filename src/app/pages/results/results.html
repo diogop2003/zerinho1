@@ -1,0 +1,125 @@
+<div class="result-page">
+
+  <header class="result-header">
+
+    <div>
+
+      <span class="result-kicker">
+        FUTEBOL DRAFT
+      </span>
+
+      <h1>
+        Resultado final
+      </h1>
+
+      <p>
+        Confira os elencos montados no draft.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="new-game-button"
+      (click)="newGame()"
+    >
+      Nova partida
+    </button>
+
+  </header>
+
+
+  <main class="teams">
+
+    @for (
+      user of users();
+      track user.id
+    ) {
+
+      <section class="team-card">
+
+        <div class="team-header">
+
+          <div>
+
+            <span>
+              TIME {{ user.id }}
+            </span>
+
+            <h2>
+              {{ user.name }}
+            </h2>
+
+          </div>
+
+          <div class="team-summary">
+
+            <strong>
+              {{ user.team.length }}/18
+            </strong>
+
+            <small>
+              jogadores
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="coins-result">
+
+          <span>
+            Saldo final
+          </span>
+
+          <strong>
+            {{ user.coins }} moedas
+          </strong>
+
+        </div>
+
+
+        <div class="players-grid">
+
+          @for (
+            player of user.team;
+            track player.id
+          ) {
+
+            <article class="player-result">
+
+              <div class="player-result-photo">
+
+                <img
+                  [src]="player.photo"
+                  [alt]="player.name"
+                />
+
+              </div>
+
+              <div class="player-result-info">
+
+                <strong>
+                  {{ player.name }}
+                </strong>
+
+                <span>
+                  {{ player.position }}
+                </span>
+
+              </div>
+
+            </article>
+
+          }
+
+        </div>
+
+      </section>
+
+    }
+
+  </main>
+
+</div>

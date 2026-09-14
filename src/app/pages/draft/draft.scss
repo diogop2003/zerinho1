@@ -1,0 +1,862 @@
+/* ============================================================
+   PÁGINA
+   ============================================================ */
+
+.draft-page {
+  min-height: 100vh;
+  padding: 30px;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #1c1c1c 0%,
+      #0d0d0d 45%,
+      #050505 100%
+    );
+
+  color: #ffffff;
+}
+
+
+/* ============================================================
+   CABEÇALHO
+   ============================================================ */
+
+.draft-header {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.draft-kicker {
+  display: block;
+
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+
+  color: #a8a8a8;
+}
+
+.draft-header h1 {
+  margin: 6px 0 0;
+
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.players-counter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 16px;
+
+  border: 1px solid #303030;
+  border-radius: 12px;
+
+  background: #111111;
+}
+
+.players-counter span {
+  color: #888888;
+  font-size: 12px;
+}
+
+.players-counter strong {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+/* ============================================================
+   LEILÃO
+   ============================================================ */
+
+.auction-area {
+  max-width: 1150px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: minmax(360px, 0.9fr) minmax(480px, 1.1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* ============================================================
+   JOGADOR ATUAL
+   ============================================================ */
+
+.player-card {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+
+  padding: 35px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #303030;
+  border-radius: 20px;
+
+  background: #111111;
+
+  box-shadow:
+    0 15px 50px rgba(0, 0, 0, 0.35);
+}
+
+.player-photo {
+  width: 280px;
+  height: 340px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+
+  background: #080808;
+  border: 1px solid #252525;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.player-photo img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+.player-info {
+  width: 100%;
+  text-align: center;
+}
+
+.player-info .position {
+  display: inline-block;
+
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  background: #202020;
+  color: #bdbdbd;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.player-info h2 {
+  margin: 14px 0 0;
+
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: -0.04em;
+}
+
+/* ============================================================
+   LANCES
+   ============================================================ */
+
+.bids-card {
+  margin-top: 0;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #303030;
+  border-radius: 20px;
+
+  background: #111111;
+
+  box-shadow:
+    0 15px 50px rgba(0, 0, 0, 0.35);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.bids-title {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 25px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #292929;
+}
+
+.bids-title h3 {
+  margin: 5px 0 0;
+
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.zero-hint {
+  color: #777777;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.bids-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bid-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 16px;
+
+  border-radius: 12px;
+
+  background: #0b0b0b;
+  border: 1px solid #262626;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.bid-row:focus-within {
+  border-color: #555555;
+  background: #101010;
+}
+
+.bid-user {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #242424;
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.bid-user strong {
+  display: block;
+
+  font-size: 15px;
+}
+
+.bid-user span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #777777;
+
+  font-size: 11px;
+}
+
+.bid-input-wrapper {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+}
+
+.bid-input-wrapper input {
+  width: 120px;
+  height: 48px;
+
+  box-sizing: border-box;
+
+  padding: 0 14px;
+
+  border: 1px solid #383838;
+  border-radius: 10px;
+
+  outline: none;
+
+  background: #161616;
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  text-align: right;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.bid-input-wrapper input:focus {
+  border-color: #ffffff;
+
+  background: #1b1b1b;
+
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.08);
+}
+
+.bid-input-wrapper input:disabled {
+  opacity: 0.55;
+}
+
+.bid-input-wrapper span {
+  color: #666666;
+  font-size: 11px;
+}
+
+/* ============================================================
+   MENSAGEM
+   ============================================================ */
+
+.auction-message {
+  margin-top: 18px;
+
+  padding: 14px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+}
+
+.auction-message.success {
+  background: rgba(255, 255, 255, 0.06);
+
+  border: 1px solid #414141;
+
+  color: #ffffff;
+}
+
+.auction-message.warning {
+  background: rgba(255, 255, 255, 0.04);
+
+  border: 1px solid #383838;
+
+  color: #c5c5c5;
+}
+
+/* ============================================================
+   BOTÕES
+   ============================================================ */
+
+.auction-actions {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.bid-button,
+.result-button {
+  width: 100%;
+
+  min-height: 52px;
+
+  border: 0;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  background: #ffffff;
+  color: #050505;
+
+  font-size: 14px;
+  font-weight: 900;
+
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.bid-button:hover,
+.result-button:hover {
+  background: #dddddd;
+
+  transform: translateY(-1px);
+}
+
+.bid-button:disabled {
+  opacity: 0.45;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* ============================================================
+   TIMES
+   ============================================================ */
+
+.teams-preview {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 10px;
+
+  margin-top: 20px;
+}
+
+.team-preview {
+  padding: 14px;
+
+  border-radius: 12px;
+
+  background: #111111;
+  border: 1px solid #292929;
+}
+
+.team-preview-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.team-preview-top strong {
+  font-size: 13px;
+}
+
+.team-preview-top span {
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.coins {
+  margin-top: 7px;
+
+  color: #777777;
+
+  font-size: 11px;
+}
+
+
+/* ============================================================
+   RECRUTAMENTO
+   ============================================================ */
+
+.recruitment-area {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.recruitment-header h2 {
+  margin: 5px 0;
+
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.recruitment-header p {
+  margin: 0;
+
+  color: #888888;
+}
+
+.teams-status {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 12px;
+
+  margin-top: 25px;
+}
+
+.team-status {
+  padding: 16px;
+
+  border-radius: 14px;
+
+  background: #111111;
+  border: 1px solid #2d2d2d;
+}
+
+.team-status-top {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 10px;
+}
+
+.team-status-top strong {
+  font-size: 14px;
+}
+
+.team-status-top span {
+  color: #ffffff;
+
+  font-weight: 800;
+}
+
+.progress {
+  height: 6px;
+
+  overflow: hidden;
+
+  border-radius: 10px;
+
+  background: #292929;
+}
+
+.progress-bar {
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: #ffffff;
+
+  transition: width 0.25s ease;
+}
+
+.team-coins {
+  margin-top: 9px;
+
+  color: #777777;
+
+  font-size: 11px;
+}
+
+
+/* ============================================================
+   LISTA DE RECRUTAMENTO
+   ============================================================ */
+
+.recruitment-list {
+  margin-top: 30px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 15px;
+}
+
+.section-title h3 {
+  margin: 5px 0 0;
+
+  font-size: 20px;
+}
+
+.secondary-button {
+  padding: 10px 14px;
+
+  border: 1px solid #383838;
+  border-radius: 9px;
+
+  background: #151515;
+  color: #b0b0b0;
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.secondary-button:hover {
+  background: #222222;
+  color: #ffffff;
+}
+
+.recruit-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 15px;
+}
+
+.recruit-card {
+  overflow: hidden;
+
+  border: 1px solid #303030;
+  border-radius: 15px;
+
+  background: #111111;
+}
+
+.recruit-card > img {
+  width: 100%;
+  height: 180px;
+
+  display: block;
+
+  object-fit: contain;
+
+  background: #080808;
+}
+
+.recruit-card-info {
+  padding: 13px;
+}
+
+.recruit-card-info strong {
+  display: block;
+
+  font-size: 14px;
+}
+
+.recruit-card-info span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #777777;
+
+  font-size: 11px;
+}
+
+.recruit-buttons {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 6px;
+
+  padding: 0 13px 13px;
+}
+
+.recruit-buttons button {
+  padding: 7px 9px;
+
+  border: 1px solid #383838;
+  border-radius: 7px;
+
+  background: #191919;
+  color: #aaaaaa;
+
+  cursor: pointer;
+
+  font-size: 10px;
+}
+
+.recruit-buttons button:hover {
+  background: #292929;
+  color: #ffffff;
+}
+
+
+/* ============================================================
+   ESTADOS VAZIOS
+   ============================================================ */
+
+.empty-recruitment,
+.empty-state {
+  margin-top: 30px;
+
+  padding: 40px;
+
+  text-align: center;
+
+  border: 1px solid #303030;
+  border-radius: 16px;
+
+  background: #111111;
+}
+
+.empty-recruitment h3,
+.empty-state h2 {
+  margin: 8px 0 0;
+}
+
+.empty-recruitment p,
+.empty-state p {
+  color: #777777;
+}
+
+.empty-state .result-button {
+  max-width: 400px;
+  margin: 20px auto 0;
+}
+
+
+/* ============================================================
+   RESULTADO
+   ============================================================ */
+
+.result-action {
+  max-width: 400px;
+
+  margin: 30px auto 0;
+}
+
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 950px) {
+
+  .auction-area {
+    max-width: 850px;
+
+    grid-template-columns: 1fr;
+  }
+
+  .player-card {
+    min-height: auto;
+
+    display: grid;
+    grid-template-columns: 220px 1fr;
+
+    align-items: center;
+
+    text-align: left;
+  }
+
+  .player-photo {
+    width: 220px;
+    height: 280px;
+  }
+
+  .player-info {
+    text-align: left;
+  }
+
+  .player-info h2 {
+    font-size: 42px;
+  }
+
+  .teams-preview,
+  .teams-status {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .recruit-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+
+  .draft-page {
+    padding: 16px;
+  }
+
+  .draft-header {
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .draft-header h1 {
+    font-size: 24px;
+  }
+
+  .players-counter {
+    padding: 8px 12px;
+  }
+
+  /* Jogador volta para formato vertical no celular */
+
+  .player-card {
+    display: flex;
+    flex-direction: column;
+
+    text-align: center;
+
+    padding: 25px;
+  }
+
+  .player-photo {
+    width: 200px;
+    height: 250px;
+  }
+
+  .player-info {
+    text-align: center;
+  }
+
+  .player-info h2 {
+    font-size: 30px;
+  }
+
+  /* Lances */
+
+  .bid-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bid-input-wrapper {
+    justify-content: flex-end;
+  }
+
+  .bid-input-wrapper input {
+    width: 130px;
+  }
+
+  /* Times */
+
+  .teams-preview,
+  .teams-status,
+  .recruit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .bids-title {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .zero-hint {
+    white-space: normal;
+  }
+}

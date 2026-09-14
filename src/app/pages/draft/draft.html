@@ -1,0 +1,623 @@
+<div class="draft-page">
+
+  <!-- ========================================================
+       CABEÇALHO
+       ======================================================== -->
+
+  <header class="draft-header">
+
+    <div>
+
+      <span class="draft-kicker">
+        FUTEBOL DRAFT
+      </span>
+
+      <h1>
+        Leilão de jogadores
+      </h1>
+
+    </div>
+
+    <div class="players-counter">
+
+      @if (
+        !recruitmentStarted() &&
+        gameService.gameStarted()
+      ) {
+
+        <span>
+          Jogador atual
+        </span>
+
+        <strong>
+          {{ gameService.currentPlayerIndex() + 1 }}
+        </strong>
+
+      } @else {
+
+        <span>
+          Recrutamento
+        </span>
+
+      }
+
+    </div>
+
+  </header>
+
+
+  <!-- ========================================================
+       RECRUTAMENTO
+       ======================================================== -->
+
+  @if (recruitmentStarted()) {
+
+    <main class="recruitment-area">
+
+      <!-- ====================================================
+           CABEÇALHO
+           ==================================================== -->
+
+      <section class="recruitment-header">
+
+        <span class="draft-kicker">
+          FASE FINAL
+        </span>
+
+        <h2>
+          Complete os elencos
+        </h2>
+
+        <p>
+          Cada participante precisa terminar com exatamente
+          {{ gameService.TEAM_SIZE }} jogadores.
+        </p>
+
+      </section>
+
+
+      <!-- ====================================================
+           STATUS DOS TIMES
+           ==================================================== -->
+
+      <section class="teams-status">
+
+        @for (
+          user of users();
+          track user.id
+        ) {
+
+          <div class="team-status">
+
+            <div class="team-status-top">
+
+              <strong>
+                {{ user.name }}
+              </strong>
+
+              <span>
+                {{ user.team.length }}/{{ gameService.TEAM_SIZE }}
+              </span>
+
+            </div>
+
+            <div class="progress">
+
+              <div
+                class="progress-bar"
+                [style.width.%]="
+                  getProgressWidth(user.team.length)
+                "
+              ></div>
+
+            </div>
+
+            <div class="team-coins">
+              {{ user.coins }} moedas
+            </div>
+
+          </div>
+
+        }
+
+      </section>
+
+
+      @if (message) {
+
+        <div
+          class="auction-message"
+          [class.success]="recruitmentFinished()"
+          [class.warning]="!recruitmentFinished()"
+          role="status"
+        >
+          {{ message }}
+        </div>
+
+      }
+
+
+      <!-- ====================================================
+           JOGADORES DISPONÍVEIS
+           ==================================================== -->
+
+      @if (
+        recruitablePlayers().length > 0 &&
+        !recruitmentFinished()
+      ) {
+
+        <section class="recruitment-list">
+
+          <div class="section-title">
+
+            <div>
+
+              <span class="draft-kicker">
+                RECRUTAMENTO
+              </span>
+
+              <h3>
+                Todos os jogadores não escolhidos
+              </h3>
+
+            </div>
+
+            <button
+              type="button"
+              class="secondary-button"
+              (click)="autoRecruit()"
+            >
+              Recrutar automaticamente
+            </button>
+
+          </div>
+
+
+          <div class="recruit-grid">
+
+            @for (
+              player of recruitablePlayers();
+              track player.id
+            ) {
+
+              <article class="recruit-card">
+
+                <img
+                  [src]="player.photo"
+                  [alt]="player.name"
+                />
+
+                <div class="recruit-card-info">
+
+                  <strong>
+                    {{ player.name }}
+                  </strong>
+
+                  <span>
+                    {{ player.position }}
+                  </span>
+
+                </div>
+
+
+                <div class="recruit-buttons">
+
+                  @for (
+                    user of users();
+                    track user.id
+                  ) {
+
+                    @if (
+                      user.team.length <
+                      gameService.TEAM_SIZE
+                    ) {
+
+                      <button
+                        type="button"
+                        (click)="
+                          recruitPlayer(
+                            user.id,
+                            player.id
+                          )
+                        "
+                      >
+                        {{ user.name }}
+                      </button>
+
+                    }
+
+                  }
+
+                </div>
+
+              </article>
+
+            }
+
+          </div>
+
+        </section>
+
+      } @else if (
+        !recruitmentFinished()
+      ) {
+
+        <section class="empty-recruitment">
+
+          <h3>
+            Nenhum jogador disponível
+          </h3>
+
+          <p>
+            Não existem mais jogadores disponíveis
+            para recrutamento.
+          </p>
+
+        </section>
+
+      }
+
+
+      <!-- ====================================================
+           RECRUTAMENTO FINALIZADO
+           ==================================================== -->
+
+      @if (recruitmentFinished()) {
+
+        <section class="empty-recruitment">
+
+          <span class="draft-kicker">
+            FINALIZADO
+          </span>
+
+          <h3>
+            Elencos completos
+          </h3>
+
+          <p>
+            Todos os participantes possuem
+            {{ gameService.TEAM_SIZE }} jogadores.
+          </p>
+
+        </section>
+
+      }
+
+
+      <!-- ====================================================
+           RESULTADO
+           ==================================================== -->
+
+      <div class="result-action">
+
+        <button
+          type="button"
+          class="result-button"
+          [disabled]="!recruitmentFinished()"
+          (click)="goToResult()"
+        >
+          Ver resultados
+        </button>
+
+      </div>
+
+    </main>
+
+  } @else {
+
+    <!-- ======================================================
+         LEILÃO
+         ====================================================== -->
+
+    <main class="auction-area">
+
+      @if (currentPlayer(); as player) {
+
+        <!-- ==================================================
+             JOGADOR ATUAL
+             ================================================== -->
+
+        <section class="player-card">
+
+          <div class="player-photo">
+
+            <img
+              [src]="player.photo"
+              [alt]="player.name"
+            />
+
+          </div>
+
+          <div class="player-info">
+
+            <span class="position">
+              {{ player.position }}
+            </span>
+
+            <h2>
+              {{ player.name }}
+            </h2>
+
+          </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             LANCES
+             ================================================== -->
+
+        <section class="bids-card">
+
+          <div class="bids-title">
+
+            <div>
+
+              <span class="draft-kicker">
+                LANCES
+              </span>
+
+              <h3>
+                Quanto você oferece?
+              </h3>
+
+            </div>
+
+            <span class="zero-hint">
+              0 = não dar lance
+            </span>
+
+          </div>
+
+
+          <div class="bids-list">
+
+            @for (
+              user of users();
+              track user.id
+            ) {
+
+              <div class="bid-row">
+
+                <div class="bid-user">
+
+                  <div class="avatar">
+                    {{ user.name.charAt(0).toUpperCase() }}
+                  </div>
+
+                  <div>
+
+                    <strong>
+                      {{ user.name }}
+                    </strong>
+
+                    <span>
+                      {{ user.coins }} moedas
+                    </span>
+
+                  </div>
+
+                </div>
+
+
+                <div class="bid-input-wrapper">
+
+                  @if (
+                    user.team.length <
+                    gameService.TEAM_SIZE
+                  ) {
+
+                    <input
+                      type="number"
+                      min="0"
+                      [max]="user.coins"
+                      [(ngModel)]="bids[user.id]"
+                      [disabled]="
+                        submitting ||
+                        auctionCompleted
+                      "
+                    />
+
+                    <span>
+                      moedas
+                    </span>
+
+                  } @else {
+
+                    <span>
+                      Time completo
+                    </span>
+
+                  }
+
+                </div>
+
+              </div>
+
+            }
+
+          </div>
+
+
+          <!-- ==================================================
+               MENSAGEM
+               ================================================== -->
+
+          @if (message) {
+
+            <div
+              class="auction-message"
+              [class.success]="winnerName"
+              [class.warning]="!winnerName"
+            >
+              {{ message }}
+            </div>
+
+          }
+
+
+          <!-- ==================================================
+               BOTÕES
+               ================================================== -->
+
+          <div class="auction-actions">
+
+            @if (!auctionCompleted) {
+
+              <button
+                type="button"
+                class="bid-button"
+                (click)="submitBids()"
+                [disabled]="submitting"
+              >
+
+                @if (submitting) {
+
+                  Processando...
+
+                } @else {
+
+                  Confirmar lances
+
+                }
+
+              </button>
+
+            } @else {
+
+              <button
+                type="button"
+                class="bid-button"
+                (click)="nextPlayer()"
+              >
+                Próximo jogador
+              </button>
+
+            }
+
+          </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             RESUMO DOS TIMES
+             ================================================== -->
+
+        <section class="teams-preview">
+
+          @for (
+            user of users();
+            track user.id
+          ) {
+
+            <div class="team-preview">
+
+              <div class="team-preview-top">
+
+                <strong>
+                  {{ user.name }}
+                </strong>
+
+                <span>
+                  {{ user.team.length }}/{{ gameService.TEAM_SIZE }}
+                </span>
+
+              </div>
+
+              <div class="coins">
+                {{ user.coins }} moedas
+              </div>
+
+            </div>
+
+          }
+
+        </section>
+
+
+      } @else {
+
+        <!-- ==================================================
+             ESTADO DE SEGURANÇA
+             ================================================== -->
+
+        @if (!gameService.gameStarted()) {
+
+          <section class="empty-state">
+
+            <span class="draft-kicker">
+              PARTIDA NÃO INICIADA
+            </span>
+
+            <h2>
+              Nenhuma partida carregada
+            </h2>
+
+            <p>
+              Acesse a configuração para iniciar uma nova partida.
+            </p>
+
+            <button
+              type="button"
+              class="result-button"
+              (click)="goToSetup()"
+            >
+              Voltar para configuração
+            </button>
+
+          </section>
+
+        } @else if (gameService.recruitmentFinished()) {
+
+          <section class="empty-state">
+
+            <span class="draft-kicker">
+              FINALIZADO
+            </span>
+
+            <h2>
+              Draft finalizado
+            </h2>
+
+            <p>
+              Todos os times estão completos.
+            </p>
+
+            <button
+              type="button"
+              class="result-button"
+              (click)="goToResult()"
+            >
+              Ver resultados
+            </button>
+
+          </section>
+
+        } @else {
+
+          <section class="empty-state">
+
+            <span class="draft-kicker">
+              AGUARDANDO
+            </span>
+
+            <h2>
+              Preparando próxima rodada
+            </h2>
+
+            <p>
+              O próximo jogador será carregado automaticamente.
+            </p>
+
+          </section>
+
+        }
+
+      }
+
+    </main>
+
+  }
+
+</div>
