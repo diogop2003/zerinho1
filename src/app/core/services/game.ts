@@ -28,7 +28,7 @@ export class GameService {
 
   readonly STARTING_COINS = 200;
   readonly TEAM_SIZE = 18;
-  readonly MAX_USERS = Math.min(4, Math.floor(PLAYERS.length / this.TEAM_SIZE));
+  readonly MAX_USERS = Math.min(8, Math.floor(PLAYERS.length / this.TEAM_SIZE));
 
   private readonly _users = signal<User[]>([]);
   private readonly _players = signal<Player[]>([]);
