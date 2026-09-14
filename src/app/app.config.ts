@@ -3,7 +3,8 @@ import {
 } from '@angular/core';
 
 import {
-  provideRouter
+  provideRouter,
+  withHashLocation
 } from '@angular/router';
 
 import {
@@ -12,6 +13,6 @@ import {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes)
+    provideRouter(routes, withHashLocation())
   ]
 };
